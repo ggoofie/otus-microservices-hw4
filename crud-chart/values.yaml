@@ -18,16 +18,15 @@ service:
 
 ingress:
   enabled: true
-  className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: arch.homework
       paths:
-        - path: /otusapp/(.*)
+        - path: /otusapp/([a-zA-Z0-9]+)/(.*)
           pathType: ImplementationSpecific
 
 resources: {}
@@ -41,11 +40,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-livenessProbe:
-  httpGet:
-    path: /health
-    port: http
 
 postgresql:
   enabled: true
